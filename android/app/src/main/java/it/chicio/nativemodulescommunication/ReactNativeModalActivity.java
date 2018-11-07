@@ -15,8 +15,12 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.common.LifecycleState;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
+import com.squareup.otto.Subscribe;
+
+import static java.util.Arrays.asList;
 
 public class ReactNativeModalActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
+
     private final int OVERLAY_PERMISSION_REQ_CODE = 8762;
     private ReactRootView mReactRootView;
     private ReactInstanceManager mReactInstanceManager;
@@ -24,6 +28,23 @@ public class ReactNativeModalActivity extends AppCompatActivity implements Defau
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registerToReactEvents();
+        askReactDrawingPermission();
+        setupReactView();
+    }
+
+    private void registerToReactEvents() {
+        ((NativeModulesApplication)getApplication())
+                .getBus()
+                .register(this);
+    }
+
+    @Subscribe
+    public void close(ReactNativeModalBridge.CloseModalEvent event) {
+        finish();
+    }
+
+    private void askReactDrawingPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {
                 Intent intent = new Intent(
@@ -33,13 +54,15 @@ public class ReactNativeModalActivity extends AppCompatActivity implements Defau
                 startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
             }
         }
+    }
 
+    private void setupReactView() {
         mReactRootView = new ReactRootView(this);
         mReactInstanceManager = ReactInstanceManager.builder()
                 .setApplication(getApplication())
                 .setBundleAssetName("index.android.bundle")
                 .setJSMainModulePath("index")
-                .addPackage(new MainReactPackage())
+                .addPackages(asList(new MainReactPackage(), new NativeModulesPackage()))
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();

@@ -3,6 +3,7 @@
           package="it.chicio.nativemodulescommunication">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:name=".NativeModulesApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
