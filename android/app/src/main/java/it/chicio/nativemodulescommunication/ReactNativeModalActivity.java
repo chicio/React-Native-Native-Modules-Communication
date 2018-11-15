@@ -33,10 +33,29 @@ public class ReactNativeModalActivity extends AppCompatActivity implements Defau
         setupReactView();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterToReactEvents();
+
+        if (mReactInstanceManager != null) {
+            mReactInstanceManager.onHostDestroy(this);
+        }
+        if (mReactRootView != null) {
+            mReactRootView.unmountReactApplication();
+        }
+    }
+
     private void registerToReactEvents() {
         ((NativeModulesApplication)getApplication())
                 .getBus()
                 .register(this);
+    }
+
+    private void unregisterToReactEvents() {
+        ((NativeModulesApplication)getApplication())
+                .getBus()
+                .unregister(this);
     }
 
     @Subscribe
@@ -124,15 +143,4 @@ public class ReactNativeModalActivity extends AppCompatActivity implements Defau
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if (mReactInstanceManager != null) {
-            mReactInstanceManager.onHostDestroy(this);
-        }
-        if (mReactRootView != null) {
-            mReactRootView.unmountReactApplication();
-        }
-    }
 }
