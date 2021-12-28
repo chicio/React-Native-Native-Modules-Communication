@@ -8,8 +8,8 @@ Generally speaking the architecture shown in this project is useful to let the N
 existing native codebase.
 This is a project for my blog posts:
  
-* [React Native: a simple architecture for Native Modules communication with your native code on Android](https://www.fabrizioduroni.it/2018/12/02/react-native-modules-bridge-communication-activitiy-fragment-android.html "React Native: a simple architecture for Native Modules communication with your Activities and Fragments on Android") 
-* [React Native: a simple architecture for Native Modules communication with your UIViewController on iOS](https://www.fabrizioduroni.it/2018/12/03/react-native-modules-bridge-communication-uiviewcontroller-ios.html "React Native: a simple architecture for Native Modules communication with your UIViewController on iOS")  
+* [React Native: a simple architecture for Native Modules communication with your native code on Android](https://www.fabrizioduroni.it/2018/12/02/react-native-modules-bridge-communication-activitiy-fragment-android/ "React Native: a simple architecture for Native Modules communication with your Activities and Fragments on Android") 
+* [React Native: a simple architecture for Native Modules communication with your UIViewController on iOS](https://www.fabrizioduroni.it/2018/12/03/react-native-modules-bridge-communication-uiviewcontroller-ios/ "React Native: a simple architecture for Native Modules communication with your UIViewController on iOS")  
 
 ### Description
 
